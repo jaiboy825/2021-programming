@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import common.JdbcUtil;
+import vo.MemberPriceVO;
 import vo.MemberVO;
 
 public class MemberDao {
@@ -104,7 +105,6 @@ public class MemberDao {
 					city = "부산";
 					break;
 				}
-				System.out.println(city);
 				vo.setCity(city);
 				list.add(vo);
 			}
@@ -165,6 +165,46 @@ public class MemberDao {
 			JdbcUtil.close(conn, pstmt);
 		}
 		return n;
+	}
+
+	public ArrayList<MemberPriceVO> getMoneyList() {
+		ArrayList<MemberPriceVO> list = new ArrayList<MemberPriceVO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		conn = JdbcUtil.getConnection();
+		try {
+			pstmt = conn.prepareStatement("select a.custno, a.custname, a.grade, sum(b.price) from member_tbl_02 a, money_tbl_02 b where a.custno = b.custno group by a.custno, a.custname, a.grade order by a.custno asc");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				MemberPriceVO vo = new MemberPriceVO();
+				vo.setCustNo(rs.getInt(1));
+				vo.setCustName(rs.getString(2));
+				String grade = "";
+				switch (rs.getString(3)) {
+				case "A":
+					grade = "VIP";
+					break;
+				case "B":
+					grade = "일반";
+					break;
+				case "C":
+					grade = "직원";
+					break;
+				}
+				vo.setGrade(grade);
+				vo.setTotal(rs.getInt(4));
+				
+				vo.setGrade(grade);
+				
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtil.close(conn, pstmt);
+		}
+		return list;
 	}
 
 }

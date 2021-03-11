@@ -36,3 +36,6 @@ insert into money_tbl_02 values (100004, 20160007, 500,2,1000,'A001','20160104')
 insert into money_tbl_02 values (100004, 20160008, 300,1,300,'A005', '20160104');
 insert into money_tbl_02 values (100004, 20160009,600,1,600,'A006','20160104');
 insert into money_tbl_02 values (100004, 20160010,3000,1,3000,'A007','20160106');
+
+
+select a.custno, a.custname, a.grade, sum(b.price) from member_tbl_02 a, money_tbl_02 b where a.custno = b.custno group by a.custno, a.custname, a.grade order by a.custno asc;

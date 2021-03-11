@@ -1,17 +1,17 @@
 package vo;
 
 
-public class MemberMoneyVO {
+public class MemberPriceVO {
 	private int custNo;
 	private String custName;
 	private String grade;
 	private int total;
 	
-	public MemberMoneyVO() {
+	public MemberPriceVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MemberMoneyVO(int custNo, String custName, String grade, int total) {
+	public MemberPriceVO(int custNo, String custName, String grade, int total) {
 		super();
 		this.custNo = custNo;
 		this.custName = custName;
