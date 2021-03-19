@@ -18,6 +18,10 @@ public class InsertController implements Controller {
 		Date joindate = Date.valueOf(req.getParameter("joindate"));
 		String grade = req.getParameter("grade");
 		String address =req.getParameter("address");
+		if(custname.length() > 3) {
+			req.setAttribute("error", "다시 입력해주세요");
+			req.getRequestDispatcher("/insert.jsp").forward(req, resp);
+		}
 		
 		MemberVO vo = new MemberVO();
 		vo.setCustno(custno);

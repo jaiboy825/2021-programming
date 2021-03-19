@@ -25,16 +25,13 @@
 					for (int i = 0; i < list.size(); i++) {
 						MemberVO vo = new MemberVO();
 						vo = list.get(i);
-						SimpleDateFormat sDate = new SimpleDateFormat("yyyy-MM-dd");
-					
-						String joindate = sDate.format(vo.getJoindate());
 			%>
 			<tr>
 				<td><%=vo.getCustno()%></td>
 				<td><%=vo.getCustname()%></td>
-				<td><%=vo.getCustname()%></td>
+				<td><%=vo.getJoindate()%></td>
+				<td><%=vo.getGrade() %> </td>
 				<td><%=vo.getAddress()%></td>
-				<td><%=joindate%></td>
 				<td><a href="/updateInfo.do?custno=<%=vo.getCustno()%>">수정</a></td>
 			</tr>
 			<%

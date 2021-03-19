@@ -8,18 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.MemberDao;
-import vo.BookStatusVO;
-import vo.MemberStatusVO;
+import vo.MemberBookVO;
+
 
 public class StatusController implements Controller {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		MemberDao dao = new MemberDao();
-		List<MemberStatusVO> mlist = dao.getMStatusList();
-		List<BookStatusVO> blist = dao.getBStatusList();
-		if (mlist != null && blist != null ) {
-			
-		}
+		List<MemberBookVO> mlist = dao.getMStatusList();
+		List<MemberBookVO> blist = dao.getBStatusList();
+		req.setAttribute("mlist", mlist);
+		req.setAttribute("blist", blist);
+		req.getRequestDispatcher("/now.jsp").forward(req, resp);
 	}
 
 }

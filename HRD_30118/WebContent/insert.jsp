@@ -53,7 +53,7 @@
 		<script type="text/javascript">
 			insert.addEventListener("click", function() {
 				if(custname.value.length > 3){
-					alert("이름이 너무 깁니다 다시 입력해주세요");
+					alert("이름이 너무 깁니다.");
 					return;
 				}
 				if (custname.value == "") {

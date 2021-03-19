@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.JDBCUtil;
-import vo.BookStatusVO;
-import vo.MemberStatusVO;
+import vo.MemberBookVO;
 import vo.MemberVO;
 
 public class MemberDao {
@@ -54,21 +53,56 @@ public class MemberDao {
 		return n;
 	}
 
-	public List<MemberStatusVO> getMStatusList() {
-		ArrayList<MemberStatusVO> list = new ArrayList<MemberStatusVO>();
+	public List<MemberBookVO> getMStatusList() {
+		ArrayList<MemberBookVO> list = new ArrayList<MemberBookVO>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			conn = JDBCUtil.getConnection();
-			pstmt = conn.prepareStatement("");
+			pstmt = conn.prepareStatement("SELECT custno, custname, COUNT(custno) FROM mem_tbl_book JOIN rent_tbl_book USING(custno) GROUP BY(custno, custname) ORDER BY COUNT(custno) DESC");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int custno = rs.getInt(1);
+				String custname = rs.getString(2);
+				int memberTotal = rs.getInt(3);
+				MemberBookVO vo = new MemberBookVO(custno, 0, custname, memberTotal, 0);
+				list.add(vo);
+			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(conn, pstmt, rs);
 		}
-		return null;
+		
+		return list;
 	}
 
-	public List<BookStatusVO> getBStatusList() {
-		return null;
+	public List<MemberBookVO> getBStatusList() {
+		ArrayList<MemberBookVO> list = new ArrayList<MemberBookVO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = JDBCUtil.getConnection();
+			pstmt = conn.prepareStatement("SELECT bookno, COUNT(bookno) FROM mem_tbl_book JOIN rent_tbl_book USING(custno) GROUP BY(bookno) ORDER BY COUNT(bookno) DESC");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int bookno = rs.getInt(1);
+				int bookTotal = rs.getInt(2);
+				MemberBookVO vo = new MemberBookVO(0, bookno, null, 0, bookTotal);
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(conn, pstmt, rs);
+		}
+		
+		return list;
 	}
 
 	public ArrayList<MemberVO> getUserList() {
