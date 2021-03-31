@@ -1,0 +1,28 @@
+@charset "UTF-8";
+*{
+	margin : 0;
+	padding	: 0;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+header {
+	width: 100vw;
+	height: 100px;
+	background-color: gray;
+	color: white;
+	text-align: center;
+}
+
+table {
+	margin: 0 auto;
+}
+
+nav > a {
+	color: white;
+	text-decoration: none;
+}
+
+button {
+	width: 150px;
+}
