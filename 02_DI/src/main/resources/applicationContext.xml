@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="tv" class="com.yydh.myapp.SamsungTV">
+		<property name="speaker" ref="sony"></property>
+		<property name="price" ref="1500000"></property>
+	</bean>
+	<bean id="sony" class="com.yydh.myapp.SonySpeaker"></bean>
+	<bean id="apple" class="com.yydh.myapp.AppleSpeaker"></bean>
+</beans>
